@@ -11,7 +11,7 @@ namespace Pickup.FlyWeight
     interface IPickupBase
     {
         #region Intrinsic State
-        PickupStats stats { get; }
+        PickupStats stats { get; }  // allow stats of pickups to be retrieved
         #endregion
 
         #region Extrinsic State
@@ -22,10 +22,11 @@ namespace Pickup.FlyWeight
     public class PickupStats
     {
         public PickupType type;
-        public int value;
+        public int value;       // retrived upon pickup (i.e. score value, invuln timer)
         public float rotSpeed;
     }
 
+    // type of pickup, score, gives 10 points on collection
     public class cScore : IPickupBase
     {
         private PickupStats _Stats = null;
@@ -48,6 +49,7 @@ namespace Pickup.FlyWeight
         }
     }
 
+    //type: life pickup, gives 1 life on collection
     public class cLife : IPickupBase
     {
         private PickupStats _Stats = null;
@@ -71,17 +73,18 @@ namespace Pickup.FlyWeight
         }
     }
 
-
+    //factory for creation and retrieval of flyweights
     static class PickupFlyweightFactory
     {
+        // contains all types of pickup already created, used to retrieve flyweight references
         private static Dictionary<PickupType, IPickupBase> pickups = new Dictionary<PickupType, IPickupBase>();
         public static int PickupCount { get; private set; }
 
         public static IPickupBase Pickup(PickupType type)
         {
-            if(!pickups.ContainsKey(type))
+            if(!pickups.ContainsKey(type))  // check if type of pickup has already been created
             {
-                switch (type)
+                switch (type)   // if not, create it and add it to the dictionary
                 {
                     case PickupType.Score:
                         pickups.Add(type, new cScore());
@@ -95,7 +98,7 @@ namespace Pickup.FlyWeight
                 }
                 PickupCount++;
             }
-            return pickups[type];
+            return pickups[type];   // if pickup type already created, simply return a reference to it
         }
     }
 }
