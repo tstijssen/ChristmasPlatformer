@@ -30,7 +30,6 @@ namespace Pickup.FlyWeight
     public class cScore : IPickupBase
     {
         private PickupStats _Stats = null;
-
         public PickupStats stats
         {
             get
@@ -53,7 +52,6 @@ namespace Pickup.FlyWeight
     public class cLife : IPickupBase
     {
         private PickupStats _Stats = null;
-
         public PickupStats stats
         {
             get
@@ -69,7 +67,6 @@ namespace Pickup.FlyWeight
                 }
                 return _Stats;
             }
-
         }
     }
 
